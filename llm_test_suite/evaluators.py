@@ -68,40 +68,49 @@ def _validate_signature(func: Callable, module_path: Path) -> None:
 PROMPT_FILE_SUFFIXES = (".json", ".jsonl", ".csv")
 
 
-def load_prompts(test_dir: Path) -> list[PromptEntry]:
-    """Load the prompt entries for a suite.
+def list_prompt_sets(test_dir: Path) -> list[str]:
+    """Return the sorted prompt set names for a suite.
 
-    Supported sources (exactly one must be present):
-      1. <test_dir>/prompts.py  - a module exposing PROMPTS: a list of entry dicts
-      2. <test_dir>/prompts/    - any *.json, *.jsonl and *.csv files,
-                                  concatenated in filename order
+    Each set is a subfolder of <test_dir>/prompts/ (e.g. prompts/json-format/).
     """
-    py_source = test_dir / "prompts.py"
     data_dir = test_dir / "prompts"
-    if py_source.is_file() and data_dir.is_dir():
+    if not data_dir.is_dir():
+        raise EvaluatorContractError(f"Missing prompts/ folder in {test_dir}")
+    sets = sorted(p.name for p in data_dir.iterdir() if p.is_dir())
+    if not sets:
+        stray = sorted(p.name for p in data_dir.iterdir() if p.is_file())
+        hint = f" Found loose files ({', '.join(stray)}); move them into a set subfolder." if stray else ""
         raise EvaluatorContractError(
-            f"{test_dir}: both prompts.py and prompts/ found; keep only one prompts source"
+            f"No prompt sets found in {data_dir}: each set must be a subfolder "
+            f"(e.g. prompts/json-format/).{hint}"
+        )
+    return sets
+
+
+def load_prompt_set(test_dir: Path, set_name: str) -> list[PromptEntry]:
+    """Load one prompt set: <test_dir>/prompts/<set_name>/...
+
+    A set contains either a prompts.py module (exposing PROMPTS) or any
+    combination of *.json, *.jsonl and *.csv files, concatenated in
+    filename order.
+    """
+    set_dir = test_dir / "prompts" / set_name
+    py_source = set_dir / "prompts.py"
+    data_files = sorted(
+        p for p in set_dir.iterdir() if p.is_file() and p.suffix.lower() in PROMPT_FILE_SUFFIXES
+    )
+    if py_source.is_file() and data_files:
+        raise EvaluatorContractError(
+            f"{set_dir}: both prompts.py and data files found; keep only one prompts source"
         )
     if py_source.is_file():
         return _load_prompts_py(py_source)
-    if data_dir.is_dir():
-        return _load_prompts_dir(data_dir)
-    raise EvaluatorContractError(
-        f"Missing prompts source in {test_dir}: expected prompts.py or prompts/ "
-        "containing *.json, *.jsonl or *.csv files"
-    )
-
-
-def _load_prompts_dir(data_dir: Path) -> list[PromptEntry]:
-    files = sorted(
-        p for p in data_dir.iterdir() if p.is_file() and p.suffix.lower() in PROMPT_FILE_SUFFIXES
-    )
-    if not files:
+    if not data_files:
         raise EvaluatorContractError(
-            f"No prompt files found in {data_dir} (expected *.json, *.jsonl or *.csv)"
+            f"No prompt files found in {set_dir} (expected *.json, *.jsonl or *.csv, or prompts.py)"
         )
     entries: list[PromptEntry] = []
-    for path in files:
+    for path in data_files:
         entries.extend(_load_prompt_file(path))
     return entries
 

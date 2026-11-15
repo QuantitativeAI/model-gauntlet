@@ -54,6 +54,7 @@ class PromptResult(BaseModel):
     """Outcome of a single prompt for a single suite."""
 
     test: str
+    set: str
     prompt: str
     expected: str | None = None
     response: str

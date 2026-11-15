@@ -1,0 +1,27 @@
+[
+  {
+    "prompt": "Which of the following is NOT an element required to establish a claim of negligence?\nA) Duty of care\nB) Breach of duty\nC) Intent to harm\nD) Causation",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "In contract law, 'consideration' best refers to:\nA) A written agreement\nB) Something of value exchanged between the parties\nC) A court order\nD) A gift between friends",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "The 'reasonable person' standard is used to determine:\nA) A defendant's intent\nB) Whether a duty was breached in negligence\nC) Whether a contract was formed\nD) The appropriate criminal sentence",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "Under the Miranda rule, a suspect in custody must be informed of the right to:\nA) A jury trial\nB) Remain silent and to have an attorney\nC) Bail\nD) Appeal the conviction",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "In the United States, the power of judicial review belongs to which branch of government?\nA) The legislative branch\nB) The executive branch\nC) The judicial branch\nD) The local governments",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  }
+]

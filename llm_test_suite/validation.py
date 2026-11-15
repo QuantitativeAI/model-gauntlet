@@ -90,11 +90,24 @@ def _validate_suite(report: ValidationReport, folder: Path, referenced: bool) ->
     name = folder.name
     try:
         evaluators.load_evaluator(folder)
-        evaluators.load_prompts(folder)
     except evaluators.EvaluatorContractError as e:
         report.issues.append(Issue("error", name, str(e)))
     except Exception as e:  # noqa: BLE001 - report any suite error (e.g. syntax error in evaluate.py)
         report.issues.append(Issue("error", name, f"Unexpected error validating suite: {e}"))
+
+    try:
+        set_names = evaluators.list_prompt_sets(folder)
+    except evaluators.EvaluatorContractError as e:
+        report.issues.append(Issue("error", name, str(e)))
+    else:
+        for set_name in set_names:
+            try:
+                evaluators.load_prompt_set(folder, set_name)
+            except evaluators.EvaluatorContractError as e:
+                report.issues.append(Issue("error", f"{name}/{set_name}", str(e)))
+            except Exception as e:  # noqa: BLE001 - report any set error (e.g. syntax error in prompts.py)
+                report.issues.append(Issue("error", f"{name}/{set_name}", f"Unexpected error: {e}"))
+
     if not referenced:
         report.issues.append(Issue("warning", name, "Suite exists but is not assigned to any model in config.json"))
 

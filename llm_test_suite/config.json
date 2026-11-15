@@ -9,7 +9,7 @@
         "do_sample": true,
         "max_new_tokens": 400
       },
-      "tests": ["json_format"]
+      "tests": ["bar-exams"]
     }
   },
   "output_dir": "test_results"

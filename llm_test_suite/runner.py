@@ -43,10 +43,14 @@ def _run_model(model_name: str, model_cfg: ModelConfig, tests_dir: Path, output_
         for test_name in model_cfg.tests:
             test_dir = tests_dir / test_name
             evaluator = evaluators.load_evaluator(test_dir)
-            entries = evaluators.load_prompts(test_dir)
-            print(f"[{model_name}] Running suite '{test_name}' ({len(entries)} prompts)...")
-            for entry in entries:
-                prompt_results.append(_run_prompt(test_name, entry, model, evaluator))
+            for set_name in evaluators.list_prompt_sets(test_dir):
+                entries = evaluators.load_prompt_set(test_dir, set_name)
+                print(
+                    f"[{model_name}] Running suite '{test_name}' / set '{set_name}' "
+                    f"({len(entries)} prompts)..."
+                )
+                for entry in entries:
+                    prompt_results.append(_run_prompt(test_name, set_name, entry, model, evaluator))
     finally:
         model.unload()
 
@@ -64,7 +68,7 @@ def _run_model(model_name: str, model_cfg: ModelConfig, tests_dir: Path, output_
     return record
 
 
-def _run_prompt(test_name: str, entry: PromptEntry, model, evaluator) -> PromptResult:
+def _run_prompt(test_name: str, set_name: str, entry: PromptEntry, model, evaluator) -> PromptResult:
     extras = entry.extra_kwargs()
     try:
         gen = model.generate(entry.prompt, system=entry.system)
@@ -73,6 +77,7 @@ def _run_prompt(test_name: str, entry: PromptEntry, model, evaluator) -> PromptR
     except Exception as e:  # noqa: BLE001 - isolate per-prompt generation failures
         return PromptResult(
             test=test_name,
+            set=set_name,
             prompt=entry.prompt,
             expected=entry.expected,
             response="",
@@ -95,6 +100,7 @@ def _run_prompt(test_name: str, entry: PromptEntry, model, evaluator) -> PromptR
     print(f"  [{status}] score={evaluation.score:.2f}  {evaluation.reason[:100]}")
     return PromptResult(
         test=test_name,
+        set=set_name,
         prompt=entry.prompt,
         expected=entry.expected,
         response=response,
