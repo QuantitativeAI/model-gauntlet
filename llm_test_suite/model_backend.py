@@ -76,10 +76,11 @@ class LocalModel:
         if self.model is None or self.tokenizer is None:
             raise RuntimeError("Model is not loaded; call load() first")
 
-        messages: dict[str, str] = {}
+        # transformers >= 5 requires a list of {"role", "content"} dicts (dict shorthand was removed).
+        messages: list[dict[str, str]] = []
         if system:
-            messages["system"] = system
-        messages["user"] = prompt
+            messages.append({"role": "system", "content": system})
+        messages.append({"role": "user", "content": prompt})
 
         generation_params = {**DEFAULT_GENERATION_PARAMS, **self.config.params}
         generation_params["pad_token_id"] = self.tokenizer.eos_token_id

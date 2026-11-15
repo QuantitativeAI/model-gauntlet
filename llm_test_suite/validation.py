@@ -44,9 +44,12 @@ def validate(config: AppConfig, tests_dir: Path) -> ValidationReport:
         return report
 
     referenced: set[str] = set()
+    download_needed = False
     for model_name, model_cfg in config.models.items():
         referenced.update(model_cfg.tests)
-        _validate_model(report, model_name, model_cfg, tests_dir)
+        download_needed |= _validate_model(report, model_name, model_cfg, tests_dir)
+
+    _check_hf_token(report, download_needed)
 
     for folder in sorted(tests_dir.iterdir()):
         if folder.is_dir():
@@ -55,21 +58,19 @@ def validate(config: AppConfig, tests_dir: Path) -> ValidationReport:
     return report
 
 
-def _validate_model(report: ValidationReport, name: str, cfg: ModelConfig, tests_dir: Path) -> None:
+def _validate_model(report: ValidationReport, name: str, cfg: ModelConfig, tests_dir: Path) -> bool:
+    """Validate one model. Returns True if the model must be downloaded from Hugging Face."""
     if cfg.type != "local":
         report.issues.append(
             Issue("error", name, f"Unsupported model type '{cfg.type}' (only 'local' is supported in v1)")
         )
-        return
+        return False
     if not cfg.model_id:
         report.issues.append(Issue("error", name, "model_id is empty"))
-        return
+        return False
 
-    if Path(cfg.model_id).is_dir():
-        pass  # local path exists
-    elif _in_hf_cache(cfg.model_id):
-        pass  # already downloaded
-    else:
+    needs_download = not (Path(cfg.model_id).is_dir() or _in_hf_cache(cfg.model_id))
+    if needs_download:
         report.issues.append(
             Issue(
                 "warning",
@@ -84,6 +85,37 @@ def _validate_model(report: ValidationReport, name: str, cfg: ModelConfig, tests
     for test in cfg.tests:
         if not (tests_dir / test).is_dir():
             report.issues.append(Issue("error", name, f"Assigned test suite '{test}' not found under {tests_dir}"))
+
+    return needs_download
+
+
+def _check_hf_token(report: ValidationReport, download_needed: bool) -> None:
+    if not download_needed:
+        return
+    token = os.environ.get("HF_TOKEN", "")
+    if not token:
+        report.issues.append(
+            Issue("warning", "env", "HF_TOKEN is not set; gated models (e.g. Llama) cannot be downloaded")
+        )
+        return
+    if not token.isascii():
+        report.issues.append(
+            Issue(
+                "error",
+                "env",
+                "HF_TOKEN contains non-ASCII characters (e.g. a '…' copied from documentation); "
+                "set your real token from https://huggingface.co/settings/tokens",
+            )
+        )
+    elif "your-token" in token.lower():
+        report.issues.append(
+            Issue(
+                "error",
+                "env",
+                "HF_TOKEN still contains the placeholder from .env.example; "
+                "set your real token from https://huggingface.co/settings/tokens",
+            )
+        )
 
 
 def _validate_suite(report: ValidationReport, folder: Path, referenced: bool) -> None:

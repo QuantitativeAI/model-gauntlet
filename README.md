@@ -22,6 +22,14 @@ pip install -r requirements.txt
 cp llm_test_suite/.env.example llm_test_suite/.env   # add HF_TOKEN etc.
 ```
 
+## Hardware
+
+The runner targets **Intel GPUs** via the PyTorch XPU backend (oneAPI). On
+start it checks `torch.xpu.is_available()` and uses the XPU when present;
+otherwise it **falls back to CPU** (works, but much slower). Other GPU
+families (NVIDIA, AMD) are not supported yet — support is planned for a
+future version.
+
 ## Usage
 
 ```bash
