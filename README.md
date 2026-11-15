@@ -71,4 +71,3 @@ def evaluate(prompt: str, response: str, expected: str | None = None, **kwargs) 
 ```
 
 Then assign the suite to a model in `llm_test_suite/config.json` under `"tests"`.
->>>>>>> master
