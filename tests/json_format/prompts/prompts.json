@@ -1,0 +1,22 @@
+[
+  {
+    "prompt": "Which planet is known as the Red Planet?\nA) Venus\nB) Mars\nC) Jupiter\nD) Saturn",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "What is the capital of France?\nA) London\nB) Berlin\nC) Paris\nD) Madrid",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "Which of these numbers is prime?\nA) 15\nB) 21\nC) 23\nD) 27",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "In which year did the first human land on the Moon?\nA) 1965\nB) 1969\nC) 1972\nD) 1975",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  }
+]
