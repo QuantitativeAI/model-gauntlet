@@ -1,0 +1,52 @@
+[
+  {
+    "prompt": "Solve for x: 3x + 7 = 22\nA) 3\nB) 5\nC) 7\nD) 15",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
+  },
+  {
+    "prompt": "What is the area of a circle with a radius of 4 units? (Use π ≈ 3.14)\nA) 12.56\nB) 25.12\nC) 50.24\nD) 16.00",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
+  },
+  {
+    "prompt": "What is 15% of 240?\nA) 24\nB) 30\nC) 36\nD) 42",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
+  },
+  {
+    "prompt": "Simplify the expression: 2(3x - 4) + 5x\nA) 11x - 8\nB) 11x - 4\nC) 6x - 8\nD) 8x - 4",
+    "expected": "A",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
+  },
+  {
+    "prompt": "Find the median of the following dataset: 4, 8, 12, 15, 19\nA) 8\nB) 11.6\nC) 12\nD) 15",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
+  },
+  {
+    "prompt": "A right triangle has legs of length 6 and 8. What is the length of the hypotenuse?\nA) 10\nB) 12\nC) 14\nD) 48",
+    "expected": "A",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
+  },
+  {
+    "prompt": "Evaluate: 2^3 × 2^2\nA) 12\nB) 16\nC) 32\nD) 64",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
+  },
+  {
+    "prompt": "What is the slope of the line passing through the points (2, 3) and (6, 11)?\nA) 1\nB) 2\nC) 4\nD) 0.5",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
+  },
+  {
+    "prompt": "What is the probability of rolling an even number on a standard six-sided die?\nA) 1/6\nB) 1/3\nC) 1/2\nD) 2/3",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
+  },
+  {
+    "prompt": "What is 3/4 + 2/5?\nA) 5/9\nB) 6/20\nC) 23/20\nD) 15/8",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
+  }
+]

@@ -196,6 +196,12 @@ Each entry needs `prompt` (str) and may include `expected` (str or null) and
 `system` (str, sent as a system message). Any extra keys (or CSV columns) are
 passed to `evaluate()` as keyword arguments.
 
+When designing a JSON response schema, put free-text fields (e.g.
+`explanation`) **before** the final answer field (e.g. `selected_option`).
+Small models commit to the answer before they have reasoned, so
+answer-first schemas systematically understate them — measured here: 5/10 →
+10/10 on a 2B model with identical weights and prompts.
+
 The runner executes every set of every assigned suite, and each result row
 records the suite and set it came from.
 
