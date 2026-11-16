@@ -17,6 +17,7 @@ from .config import (
     load_env,
     resolve_output_dir,
 )
+from .report import collect_rows, render_html, render_markdown
 from .runner import run_tests
 from .validation import validate
 
@@ -46,7 +47,31 @@ def build_parser() -> argparse.ArgumentParser:
     p_run = sub.add_parser("run", parents=[common], help="Run the configured test suites")
     p_run.add_argument("--model", action="append", default=None, metavar="NAME", help="Only run this model (repeatable)")
     p_run.add_argument("--output-dir", default=None, help="Override the results directory")
+
+    p_report = sub.add_parser(
+        "report", parents=[common], help="Write a markdown/HTML report of all recorded runs"
+    )
+    p_report.add_argument("--format", choices=("md", "html"), default="md", help="Report format (default: md)")
+    p_report.add_argument("--output", default=None, help="Output file path (default: <results dir>/report.<ext>)")
     return parser
+
+
+def _write_report(config, args) -> int:
+    results_dir = resolve_output_dir(config, None)
+    if not results_dir.is_dir():
+        print(f"error: results directory not found: {results_dir}", file=sys.stderr)
+        return 1
+    rows = collect_rows(results_dir)
+    if not rows:
+        print(f"No runs found under {results_dir}; nothing to report.")
+        return 1
+    ext = "md" if args.format == "md" else "html"
+    output = Path(args.output) if args.output else results_dir / f"report.{ext}"
+    content = render_markdown(rows) if args.format == "md" else render_html(rows)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(content, encoding="utf-8")
+    print(f"Report written to {output} ({len(rows)} run/suite rows)")
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -58,6 +83,9 @@ def main(argv: list[str] | None = None) -> int:
     except (FileNotFoundError, json.JSONDecodeError, ValidationError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 2
+
+    if args.command == "report":
+        return _write_report(config, args)
 
     report = validate(config, DEFAULT_TESTS_DIR)
 

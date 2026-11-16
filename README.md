@@ -41,7 +41,16 @@ python -m llm_test_suite run
 
 # Run a single model
 python -m llm_test_suite run --model llama-3.1-8b
+
+# Summarize all recorded runs (markdown by default, or --format html)
+python -m llm_test_suite report
+python -m llm_test_suite report --format html
 ```
+
+The report is written to `test_results/report.md` (or `report.html`) and
+contains a per-model summary plus one row per run × suite with the model
+parameters, date/time, pass rate and average score. Use `--output` to write
+it elsewhere.
 
 ## Writing a test suite
 
