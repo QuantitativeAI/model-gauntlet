@@ -25,7 +25,22 @@ def _extract_json(text: str):
 
 
 def _normalize_option(value: str) -> str:
-    return value.strip().upper().rstrip(").")
+    """Reduce an option to its letter: 'B) Something...' -> 'B', 'option b' -> 'B'."""
+    value = value.strip().upper()
+    match = re.match(r"^(?:OPTION\s+)?([A-Z])(?=[\s).:]|$)", value)
+    return match.group(1) if match else value
+
+
+def _option_texts(prompt: str) -> dict[str, str]:
+    """Map option letter -> option text as listed in the prompt (e.g. 'A) Duty of care')."""
+    return {
+        m.group(1): m.group(2).strip()
+        for m in re.finditer(r"^\s*([A-Z])\)\s*(.+?)\s*$", prompt, re.MULTILINE)
+    }
+
+
+def _norm_text(value: str) -> str:
+    return re.sub(r"\s+", " ", value.strip().lower())
 
 
 def evaluate(prompt: str, response: str, expected: str | None = None, **kwargs) -> dict:
@@ -46,7 +61,13 @@ def evaluate(prompt: str, response: str, expected: str | None = None, **kwargs) 
 
     if isinstance(data, dict) and "selected_option" in data:
         selected = str(data["selected_option"])
-        if _normalize_option(selected) == _normalize_option(expected):
+        correct = _normalize_option(selected) == _normalize_option(expected)
+        if not correct:
+            # The model may echo the option text without its letter; accept an
+            # exact match against the expected option's text as listed in the prompt.
+            expected_text = _option_texts(prompt).get(expected.strip().upper())
+            correct = bool(expected_text) and _norm_text(selected) == _norm_text(expected_text)
+        if correct:
             return {
                 "passed": True,
                 "score": 1.0,
