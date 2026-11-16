@@ -61,9 +61,9 @@ added, just create a new subfolder (no config change needed):
 ```
 tests/bar-exams/
   prompts/
-    json-format/        # set 1
+    json-format/        # set 1 (exists)
       prompts.json
-    multiple-choice/    # set 2
+    multiple-choice/    # set 2 (hypothetical — create when you add it)
       qa.jsonl
   evaluate.py
 ```
