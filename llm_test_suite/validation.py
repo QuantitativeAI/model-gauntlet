@@ -44,32 +44,50 @@ def validate(config: AppConfig, tests_dir: Path) -> ValidationReport:
         return report
 
     referenced: set[str] = set()
+    runs_all = False
     download_needed = False
     for model_name, model_cfg in config.models.items():
-        referenced.update(model_cfg.tests)
+        if model_cfg.tests is None:
+            runs_all = True  # omitted 'tests' means every suite is assigned
+        else:
+            referenced.update(model_cfg.tests)
         download_needed |= _validate_model(report, model_name, model_cfg, tests_dir)
 
     _check_hf_token(report, download_needed)
 
     for folder in sorted(tests_dir.iterdir()):
         if folder.is_dir():
-            _validate_suite(report, folder, referenced=folder.name in referenced)
+            _validate_suite(report, folder, referenced=runs_all or folder.name in referenced)
 
     return report
 
 
 def _validate_model(report: ValidationReport, name: str, cfg: ModelConfig, tests_dir: Path) -> bool:
     """Validate one model. Returns True if the model must be downloaded from Hugging Face."""
-    if cfg.type != "local":
+    if cfg.type not in ("local", "gguf"):
         report.issues.append(
-            Issue("error", name, f"Unsupported model type '{cfg.type}' (only 'local' is supported in v1)")
+            Issue("error", name, f"Unsupported model type '{cfg.type}' (supported: 'local', 'gguf')")
         )
         return False
     if not cfg.model_id:
         report.issues.append(Issue("error", name, "model_id is empty"))
         return False
 
-    needs_download = not (Path(cfg.model_id).is_dir() or _in_hf_cache(cfg.model_id))
+    if cfg.type == "gguf":
+        needs_download = False
+        if not Path(cfg.model_id).is_file():
+            report.issues.append(Issue("error", name, f"GGUF model file not found: {cfg.model_id}"))
+        elif not _llama_cpp_available():
+            report.issues.append(
+                Issue(
+                    "warning",
+                    name,
+                    "type 'gguf' requires llama-cpp-python, which is not installed; "
+                    "use a SYCL/oneAPI build for Intel GPU offload",
+                )
+            )
+    else:
+        needs_download = not (Path(cfg.model_id).is_dir() or _in_hf_cache(cfg.model_id))
     if needs_download:
         report.issues.append(
             Issue(
@@ -80,9 +98,11 @@ def _validate_model(report: ValidationReport, name: str, cfg: ModelConfig, tests
             )
         )
 
-    if not cfg.tests:
-        report.issues.append(Issue("warning", name, "No test suites assigned to this model"))
-    for test in cfg.tests:
+    if cfg.tests is not None and not cfg.tests:
+        report.issues.append(
+            Issue("warning", name, "'tests' is empty; this model will run no suites (omit the key to run all)")
+        )
+    for test in cfg.tests or []:
         if not (tests_dir / test).is_dir():
             report.issues.append(Issue("error", name, f"Assigned test suite '{test}' not found under {tests_dir}"))
 
@@ -147,3 +167,9 @@ def _validate_suite(report: ValidationReport, folder: Path, referenced: bool) ->
 def _in_hf_cache(model_id: str) -> bool:
     hf_home = Path(os.environ.get("HF_HOME", Path.home() / ".cache" / "huggingface"))
     return (hf_home / "hub" / f"models--{model_id.replace('/', '--')}").is_dir()
+
+
+def _llama_cpp_available() -> bool:
+    import importlib.util
+
+    return importlib.util.find_spec("llama_cpp") is not None

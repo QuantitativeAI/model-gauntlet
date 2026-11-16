@@ -34,13 +34,17 @@ def run_tests(
 
 def _run_model(model_name: str, model_cfg: ModelConfig, tests_dir: Path, output_dir: Path) -> RunRecord:
     # Imported lazily so that `validate` works without torch/transformers installed.
-    from .model_backend import LocalModel
+    from .model_backend import create_model
 
-    model = LocalModel(model_name, model_cfg)
+    model = create_model(model_name, model_cfg)
     model.load()
+    # Omitted 'tests' means every suite under tests/.
+    test_names = model_cfg.tests
+    if test_names is None:
+        test_names = sorted(p.name for p in tests_dir.iterdir() if p.is_dir())
     prompt_results: list[PromptResult] = []
     try:
-        for test_name in model_cfg.tests:
+        for test_name in test_names:
             test_dir = tests_dir / test_name
             evaluator = evaluators.load_evaluator(test_dir)
             for set_name in evaluators.list_prompt_sets(test_dir):
