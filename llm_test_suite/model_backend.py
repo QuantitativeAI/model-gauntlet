@@ -154,10 +154,12 @@ class GGUFModel:
 
     def load(self) -> None:
         try:
+            import llama_cpp
+
             try:
-                from llama_cpp import Llama as LlamaCls  # llama-cpp-python >= 0.3
-            except ImportError:
-                from llama_cpp import LLM as LlamaCls  # llama-cpp-python < 0.3
+                LlamaCls = llama_cpp.Llama  # llama-cpp-python >= 0.3
+            except AttributeError:
+                LlamaCls = llama_cpp.LLM  # llama-cpp-python < 0.3
         except ImportError as e:
             raise ImportError(
                 "llama-cpp-python is required for type='gguf' models but is not installed. "
@@ -168,9 +170,21 @@ class GGUFModel:
         print(f"[{self.name}] Loading GGUF model {self.config.model_id}...")
         # n_gpu_layers=-1 offloads every layer the build supports; CPU-only builds
         # keep everything on the CPU. The chat template is embedded in the GGUF file.
-        self.llm = LlamaCls(
-            model_path=self.config.model_id, n_ctx=self.config.n_ctx, n_gpu_layers=-1, verbose=False
-        )
+        llm_kwargs: dict[str, Any] = {
+            "model_path": self.config.model_id,
+            "n_ctx": self.config.n_ctx,
+            "n_gpu_layers": -1,
+            "verbose": False,
+        }
+        if self.config.main_gpu:
+            llm_kwargs["main_gpu"] = self.config.main_gpu
+        if self.config.tensor_split:
+            llm_kwargs["tensor_split"] = self.config.tensor_split
+        if self.config.split_mode == "row":
+            llm_kwargs["split_mode"] = llama_cpp.LLAMA_SPLIT_MODE_ROW
+        elif self.config.split_mode == "layer":
+            llm_kwargs["split_mode"] = llama_cpp.LLAMA_SPLIT_MODE_LAYER
+        self.llm = LlamaCls(**llm_kwargs)
         self._disable_thinking_if_supported()
         print(f"[{self.name}] Model loaded.")
 

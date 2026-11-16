@@ -31,6 +31,14 @@ class ModelConfig(BaseModel):
     device_map: str | None = Field(None, description="Optional accelerate device_map, type 'local' only")
     max_memory: dict[str, Any] | None = Field(None, description="Optional accelerate max_memory mapping, type 'local' only")
     n_ctx: int = Field(4096, description="GGUF only: llama.cpp context window size (ignored for type 'local')")
+    main_gpu: int = Field(0, ge=0, description="GGUF only: primary GPU device index (ignored for type 'local')")
+    tensor_split: list[float] | None = Field(
+        None,
+        description="GGUF only: per-GPU weight ratio for multi-GPU, e.g. [1.0, 1.0] (ignored for type 'local')",
+    )
+    split_mode: str | None = Field(
+        None, description="GGUF only: 'row' (split each tensor) or 'layer' (split by layer); default is llama.cpp's"
+    )
 
 
 class AppConfig(BaseModel):

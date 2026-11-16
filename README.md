@@ -27,7 +27,6 @@ cp llm_test_suite/.env.example llm_test_suite/.env   # add HF_TOKEN etc.
 The runner targets **Intel GPUs** via the PyTorch XPU backend (oneAPI). On
 start it checks `torch.xpu.is_available()` and uses the XPU when present;
 otherwise it **falls back to CPU** (works, but much slower). Other GPU
-other GPU
 families (NVIDIA, AMD) are not supported yet — support is planned for a
 future version.
 
@@ -93,6 +92,46 @@ breaks `import torch`. Build in one shell, run the app in a fresh one.
 Generation params merge over per-backend defaults; for `gguf` models the
 transformers spelling `max_new_tokens` is accepted and translated to llama.cpp's
 `max_tokens`. `n_ctx` (default 4096) sets the GGUF context window.
+
+### Multi-GPU (Intel)
+
+Both backends can spread one model across several Intel GPUs. This is for
+*fitting* models that don't fit on a single GPU, not a speedup — a split
+model pays a cross-device transfer at every layer boundary, so a model that
+fits on one GPU runs best on that one alone.
+
+- `local` — `"device_map": "auto"` shards layers across all visible XPUs;
+  `max_memory` caps the memory per device index:
+
+  ```json
+  "big-model": {
+    "type": "local",
+    "model_id": "org/model-70b",
+    "device_map": "auto",
+    "max_memory": { "0": "28GiB", "1": "21GiB" }
+  }
+  ```
+
+- `gguf` — `tensor_split` holds one weight ratio per GPU; `main_gpu`
+  (default 0) picks the device that also hosts the non-splittable parts;
+  optional `split_mode` is `"row"` (split each tensor across GPUs) or
+  `"layer"` (whole layers per GPU). The llama.cpp SYCL backend currently
+  only supports `"layer"` — `"row"` aborts at load time, so use `"layer"":
+
+  ```json
+  "big-model": {
+    "type": "gguf",
+    "model_id": "/mnt/models/Model-70B-Q8_0.gguf",
+    "tensor_split": [1.0, 1.0],
+    "main_gpu": 1
+  }
+  ```
+
+Device numbers are in SYCL/XPU order; list them with:
+
+```bash
+python -c "import torch; print([torch.xpu.get_device_name(i) for i in range(torch.xpu.device_count())])"
+```
 
 The `tests` list assigns suites to a model. Omit the key and the model runs
 every suite under `tests/` (new suites are picked up automatically); an

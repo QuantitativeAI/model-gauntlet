@@ -73,6 +73,15 @@ def _validate_model(report: ValidationReport, name: str, cfg: ModelConfig, tests
         report.issues.append(Issue("error", name, "model_id is empty"))
         return False
 
+    if cfg.split_mode not in (None, "row", "layer"):
+        report.issues.append(Issue("error", name, f"Unsupported split_mode '{cfg.split_mode}' (supported: 'row', 'layer')"))
+    if cfg.tensor_split is not None and any(v <= 0 for v in cfg.tensor_split):
+        report.issues.append(Issue("error", name, "tensor_split values must be positive ratios"))
+    if cfg.type == "local" and (cfg.tensor_split is not None or cfg.split_mode is not None):
+        report.issues.append(
+            Issue("warning", name, "tensor_split/split_mode are ignored for type 'local' (use device_map/max_memory instead)")
+        )
+
     if cfg.type == "gguf":
         needs_download = False
         if not Path(cfg.model_id).is_file():
