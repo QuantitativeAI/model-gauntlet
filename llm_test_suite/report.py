@@ -48,6 +48,9 @@ def _rows_for_record(record: dict) -> list[ReportRow]:
     model = str(record.get("model", "?"))
     timestamp = str(record.get("timestamp", ""))
     params = format_params(record.get("params") or {})
+    seed = record.get("seed")
+    if seed is not None:
+        params = f"{params} seed={seed}" if params else f"seed={seed}"
 
     by_suite: dict[str, list[dict]] = {}
     for result in record.get("results", []):

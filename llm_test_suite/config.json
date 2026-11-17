@@ -3,14 +3,28 @@
     "MiniCPM5-2B-Q8_0": {
       "type": "gguf",
       "model_id": "/mnt/models/MiniCPM5/MiniCPM5-2B-Q8_0.gguf",
-      "n_ctx": 8192,
+      "n_ctx": 20000,
       "params": {
         "temperature": 0.3,
         "top_p": 0.85,
         "do_sample": true,
-        "max_new_tokens": 400
+        "max_new_tokens": 600
+      }
+    },
+    "Qwen3-8B-Q8_0": {
+      "type": "gguf",
+      "model_id": "/mnt/models/Qwen3-8B/Qwen3-8B-Q8_0.gguf",
+      "n_ctx": 20000,
+      "params": {
+        "temperature": 0.3,
+        "top_p": 0.85,
+        "do_sample": true,
+        "max_new_tokens": 600
       }
     }
-  },
+ },
   "output_dir": "test_results"
 }
+
+
+

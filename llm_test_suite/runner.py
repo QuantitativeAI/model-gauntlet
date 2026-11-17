@@ -64,6 +64,7 @@ def _run_model(model_name: str, model_cfg: ModelConfig, tests_dir: Path, output_
         model=model_name,
         model_id=model_cfg.model_id,
         params=dict(model_cfg.params),
+        seed=model_cfg.seed if model_cfg.type == "gguf" else None,
         results=prompt_results,
         summary=summary,
     )

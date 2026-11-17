@@ -31,6 +31,7 @@ class ModelConfig(BaseModel):
     device_map: str | None = Field(None, description="Optional accelerate device_map, type 'transformers' only")
     max_memory: dict[str, Any] | None = Field(None, description="Optional accelerate max_memory mapping, type 'transformers' only")
     n_ctx: int = Field(4096, description="GGUF only: llama.cpp context window size (ignored for type 'transformers')")
+    seed: int = Field(0, description="GGUF only: sampling seed; a fixed seed makes runs reproducible (ignored for type 'transformers')")
     main_gpu: int = Field(0, ge=0, description="GGUF only: primary GPU device index (ignored for type 'transformers')")
     tensor_split: list[float] | None = Field(
         None,
@@ -91,5 +92,6 @@ class RunRecord(BaseModel):
     model: str
     model_id: str
     params: dict[str, Any]
+    seed: int | None = Field(None, description="Sampling seed used for the run (gguf only; null for transformers)")
     results: list[PromptResult]
     summary: RunSummary

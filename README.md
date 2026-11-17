@@ -93,6 +93,15 @@ Generation params merge over per-backend defaults; for `gguf` models the
 transformers spelling `max_new_tokens` is accepted and translated to llama.cpp's
 `max_tokens`. `n_ctx` (default 4096) sets the GGUF context window.
 
+`seed` (default 0, `gguf` only) fixes the sampling seed so runs are
+reproducible: with the same seed, params and prompt order, a rerun produces
+the same generations, so score changes between runs reflect parameter changes
+alone. Set a different value to draw a different (but still reproducible)
+sample. The seed is recorded in each run's results row and shown in the
+report's Params column. (`transformers` runs are not seeded; very long
+generations can also vary slightly between runs due to GPU float
+non-determinism.)
+
 ### Multi-GPU (Intel)
 
 Both backends can spread one model across several Intel GPUs. This is for

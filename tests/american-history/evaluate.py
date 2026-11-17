@@ -9,6 +9,46 @@ import json
 import re
 
 
+def _repair_backslashes(text: str) -> str:
+    """Double backslashes that are not valid JSON escapes (e.g. LaTeX \\sin).
+
+    Small models often emit LaTeX with single backslashes, which JSON rejects;
+    repairing them lets an otherwise well-formed response parse. Backslashes
+    already part of a valid escape (e.g. a doubled ``\\``) are left alone, so
+    mixed-escaping responses (``\\int`` next to ``\\,``) still parse.
+    """
+    valid_escapes = '"\\/bfnrtu'
+    hex_digits = "0123456789abcdefABCDEF"
+    out: list[str] = []
+    i, n = 0, len(text)
+    while i < n:
+        ch = text[i]
+        if ch != "\\":
+            out.append(ch)
+            i += 1
+            continue
+        nxt = text[i + 1] if i + 1 < n else ""
+        if nxt in valid_escapes:
+            end = i + 2
+            if nxt == "u":
+                while end < n and end - i < 6 and text[end] in hex_digits:
+                    end += 1
+            out.append(text[i:end])
+            i = end
+        else:
+            out.append("\\\\")
+            i += 1
+    return "".join(out)
+
+
+def _loads_lenient(text: str):
+    """json.loads, retrying once with repaired backslash escapes."""
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        return json.loads(_repair_backslashes(text))
+
+
 def _extract_json(text: str):
     """Parse JSON from a response, tolerating code fences and surrounding prose."""
     text = text.strip()
@@ -16,11 +56,11 @@ def _extract_json(text: str):
     if fence:
         text = fence.group(1).strip()
     try:
-        return json.loads(text)
+        return _loads_lenient(text)
     except json.JSONDecodeError:
         start, end = text.find("{"), text.rfind("}")
         if start != -1 and end > start:
-            return json.loads(text[start : end + 1])
+            return _loads_lenient(text[start : end + 1])
         raise
 
 
