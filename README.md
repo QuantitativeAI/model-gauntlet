@@ -112,6 +112,10 @@ fits on one GPU runs best on that one alone.
   }
   ```
 
+  A model that fits on one GPU should be **pinned** there instead
+  (`"device_map": "xpu:1"`) — sharding adds a cross-device transfer at every
+  layer boundary, and multi-device execution on torch XPU is less robust.
+
 - `gguf` — `tensor_split` holds one weight ratio per GPU; `main_gpu`
   (default 0) picks the device that also hosts the non-splittable parts;
   optional `split_mode` is `"row"` (split each tensor across GPUs) or
@@ -153,6 +157,21 @@ python -m llm_test_suite run --model llama-3.1-8b
 python -m llm_test_suite report
 python -m llm_test_suite report --format html
 ```
+
+`validate` and `run` accept `--config PATH` to use an alternative config.
+Keep **one backend type per config file**: loading both a transformers
+(torch) model and a llama-cpp (gguf) model in one process crashes with an
+MKL runtime conflict. The defaults are:
+
+- `llm_test_suite/config.json` — gguf models
+- `llm_test_suite/config-local.json` — local/transformers models
+
+```bash
+python -m llm_test_suite run --config llm_test_suite/config-local.json
+```
+
+Both write into the same `test_results/` directory, so the report covers
+runs from all configs.
 
 The report is written to `test_results/report.md` (or `report.html`) and
 contains a per-model summary plus one row per run × suite with the model

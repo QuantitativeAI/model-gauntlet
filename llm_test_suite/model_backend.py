@@ -94,7 +94,10 @@ class LocalModel:
         if hasattr(self.model.config, "text_config") and not hasattr(self.model.config, "vocab_size"):
             self.model.config.vocab_size = self.model.config.text_config.vocab_size
 
-        print(f"[{self.name}] Model loaded.")
+        # Inputs must land on the device holding the first layer (the embedding);
+        # with device_map pinning or sharding that may not be the default xpu:0.
+        self.device = str(next(self.model.parameters()).device)
+        print(f"[{self.name}] Model loaded on {self.device}.")
 
     def unload(self) -> None:
         self.model = None
