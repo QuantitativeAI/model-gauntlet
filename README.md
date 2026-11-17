@@ -34,9 +34,9 @@ future version.
 
 Each model in `config.json` has a `type`:
 
-- `local` (default) — a Hugging Face model id **or a local directory**
+- `transformers` (default) — a Hugging Face model id **or a local directory**
   containing `config.json` + `*.safetensors`. Hub ids are downloaded to the
-  HF cache on first use and run via transformers.
+  HF cache on first use.
 - `gguf` — a path to a `.gguf` file, run via
   [llama-cpp-python](https://github.com/leloykun/llama-cpp-python) with the
   chat template embedded in the file. `model_id` must point at the file.
@@ -100,12 +100,12 @@ Both backends can spread one model across several Intel GPUs. This is for
 model pays a cross-device transfer at every layer boundary, so a model that
 fits on one GPU runs best on that one alone.
 
-- `local` — `"device_map": "auto"` shards layers across all visible XPUs;
+- `transformers` — `"device_map": "auto"` shards layers across all visible XPUs;
   `max_memory` caps the memory per device index:
 
   ```json
   "big-model": {
-    "type": "local",
+    "type": "transformers",
     "model_id": "org/model-70b",
     "device_map": "auto",
     "max_memory": { "0": "28GiB", "1": "21GiB" }
@@ -164,10 +164,10 @@ Keep **one backend type per config file**: loading both a transformers
 MKL runtime conflict. The defaults are:
 
 - `llm_test_suite/config.json` — gguf models
-- `llm_test_suite/config-local.json` — local/transformers models
+- `llm_test_suite/config-safetensors.json` — safetensors/transformers models
 
 ```bash
-python -m llm_test_suite run --config llm_test_suite/config-local.json
+python -m llm_test_suite run --config llm_test_suite/config-safetensors.json
 ```
 
 Both write into the same `test_results/` directory, so the report covers

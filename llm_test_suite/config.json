@@ -1,8 +1,8 @@
 {
   "models": {
-        "llama-3.1-8b": {
-          "type": "local",
-          "model_id": "meta-llama/Llama-3.1-8B-Instruct",
+    "MiniCPM5-2B-Q8_0": {
+          "type": "gguf",
+          "model_id": "/mnt/models/MiniCPM5/MiniCPM5-2B-Q8_0.gguf",
           "params": {
             "temperature": 0.3,
             "top_p": 0.85,

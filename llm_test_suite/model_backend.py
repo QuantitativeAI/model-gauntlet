@@ -1,4 +1,4 @@
-"""Local model backends: Hugging Face transformers and llama-cpp GGUF."""
+"""Model backends: Hugging Face transformers and llama-cpp GGUF."""
 
 from __future__ import annotations
 
@@ -57,7 +57,7 @@ class GenerationOutput:
     num_tokens: int
 
 
-class LocalModel:
+class TransformersModel:
     """Loads a Hugging Face causal LM once and generates responses for prompts."""
 
     def __init__(self, name: str, config: ModelConfig):
@@ -238,9 +238,9 @@ class GGUFModel:
         return GenerationOutput(text=text, elapsed_seconds=elapsed, tokens_per_second=tps, num_tokens=num_tokens)
 
 
-def create_model(name: str, config: ModelConfig) -> LocalModel | GGUFModel:
-    if config.type == "local":
-        return LocalModel(name, config)
+def create_model(name: str, config: ModelConfig) -> TransformersModel | GGUFModel:
+    if config.type == "transformers":
+        return TransformersModel(name, config)
     if config.type == "gguf":
         return GGUFModel(name, config)
-    raise ValueError(f"Unsupported model type '{config.type}' (supported: 'local', 'gguf')")
+    raise ValueError(f"Unsupported model type '{config.type}' (supported: 'transformers', 'gguf')")

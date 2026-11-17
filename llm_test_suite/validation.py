@@ -64,9 +64,9 @@ def validate(config: AppConfig, tests_dir: Path) -> ValidationReport:
 
 def _validate_model(report: ValidationReport, name: str, cfg: ModelConfig, tests_dir: Path) -> bool:
     """Validate one model. Returns True if the model must be downloaded from Hugging Face."""
-    if cfg.type not in ("local", "gguf"):
+    if cfg.type not in ("transformers", "gguf"):
         report.issues.append(
-            Issue("error", name, f"Unsupported model type '{cfg.type}' (supported: 'local', 'gguf')")
+            Issue("error", name, f"Unsupported model type '{cfg.type}' (supported: 'transformers', 'gguf')")
         )
         return False
     if not cfg.model_id:
@@ -77,9 +77,9 @@ def _validate_model(report: ValidationReport, name: str, cfg: ModelConfig, tests
         report.issues.append(Issue("error", name, f"Unsupported split_mode '{cfg.split_mode}' (supported: 'row', 'layer')"))
     if cfg.tensor_split is not None and any(v <= 0 for v in cfg.tensor_split):
         report.issues.append(Issue("error", name, "tensor_split values must be positive ratios"))
-    if cfg.type == "local" and (cfg.tensor_split is not None or cfg.split_mode is not None):
+    if cfg.type == "transformers" and (cfg.tensor_split is not None or cfg.split_mode is not None):
         report.issues.append(
-            Issue("warning", name, "tensor_split/split_mode are ignored for type 'local' (use device_map/max_memory instead)")
+            Issue("warning", name, "tensor_split/split_mode are ignored for type 'transformers' (use device_map/max_memory instead)")
         )
 
     if cfg.type == "gguf":

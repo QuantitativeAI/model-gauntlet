@@ -19,22 +19,22 @@ class EvaluationResult(BaseModel):
 class ModelConfig(BaseModel):
     """One entry in the config.json "models" mapping."""
 
-    type: str = Field("local", description="Model backend type: 'local' (transformers) or 'gguf' (llama-cpp)")
+    type: str = Field("transformers", description="Model backend type: 'transformers' (Hugging Face) or 'gguf' (llama-cpp)")
     model_id: str = Field(
         ...,
-        description="HF model id or local .safetensors directory (type 'local'), or path to a .gguf file (type 'gguf')",
+        description="HF model id or .safetensors directory (type 'transformers'), or path to a .gguf file (type 'gguf')",
     )
     params: dict[str, Any] = Field(default_factory=dict, description="Generation parameter overrides")
     tests: list[str] | None = Field(
         None, description="Test suite folder names under tests/ (omit the key to run all suites)"
     )
-    device_map: str | None = Field(None, description="Optional accelerate device_map, type 'local' only")
-    max_memory: dict[str, Any] | None = Field(None, description="Optional accelerate max_memory mapping, type 'local' only")
-    n_ctx: int = Field(4096, description="GGUF only: llama.cpp context window size (ignored for type 'local')")
-    main_gpu: int = Field(0, ge=0, description="GGUF only: primary GPU device index (ignored for type 'local')")
+    device_map: str | None = Field(None, description="Optional accelerate device_map, type 'transformers' only")
+    max_memory: dict[str, Any] | None = Field(None, description="Optional accelerate max_memory mapping, type 'transformers' only")
+    n_ctx: int = Field(4096, description="GGUF only: llama.cpp context window size (ignored for type 'transformers')")
+    main_gpu: int = Field(0, ge=0, description="GGUF only: primary GPU device index (ignored for type 'transformers')")
     tensor_split: list[float] | None = Field(
         None,
-        description="GGUF only: per-GPU weight ratio for multi-GPU, e.g. [1.0, 1.0] (ignored for type 'local')",
+        description="GGUF only: per-GPU weight ratio for multi-GPU, e.g. [1.0, 1.0] (ignored for type 'transformers')",
     )
     split_mode: str | None = Field(
         None, description="GGUF only: 'row' (split each tensor) or 'layer' (split by layer); default is llama.cpp's"

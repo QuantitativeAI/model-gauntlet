@@ -1,7 +1,7 @@
 {
   "models": {
     "Llama-3.1-8B": {
-      "type": "local",
+      "type": "transformers",
       "model_id": "meta-llama/Llama-3.1-8B-Instruct",
       "device_map": "xpu:1",
       "params": {
