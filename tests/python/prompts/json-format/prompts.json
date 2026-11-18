@@ -1,0 +1,53 @@
+[
+  {
+    "prompt": "What is the output of the following Python code?\n\ndef append_item(val, items=[]):\n    items.append(val)\n    return items\n\nprint(append_item(1))\nprint(append_item(2))\n\nA) [1] followed by [2]\nB) [1] followed by [1, 2]\nC) [1, 2] followed by [1, 2]\nD) TypeError",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "What does the following Python code print?\n\nfuncs = [lambda: i for i in range(3)]\nprint([f() for f in funcs])\n\nA) [0, 1, 2]\nB) [2, 2, 2]\nC) [3, 3, 3]\nD) [0, 0, 0]",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "What is the output of this Python snippet?\n\na = [1, 2, 3]\nb = a\na += [4]\nprint(b)\n\nA) [1, 2, 3]\nB) [1, 2, 3, 4]\nC) [4]\nD) TypeError",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "What does the following Python code output?\n\nx = (1, [2, 3])\ntry:\n    x[1] += [4]\nexcept TypeError:\n    pass\nprint(x)\n\nA) (1, [2, 3])\nB) (1, [2, 3, 4])\nC) (1, [4])\nD) Raises an unhandled TypeError",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "What is printed by the following Python code?\n\nprint(bool(\"False\") and not False == True)\n\nA) True\nB) False\nC) None\nD) SyntaxError",
+    "expected": "A",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "What is the output of the following dictionary comprehension?\n\nd = {True: 'yes', 1: 'no', 1.0: 'maybe'}\nprint(len(d), d[True])\n\nA) 3 yes\nB) 1 maybe\nC) 1 yes\nD) 2 maybe",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "What does this Python generator expression output?\n\ngen = (x * 2 for x in range(3))\nprint(sum(gen), sum(gen))\n\nA) 6 6\nB) 6 0\nC) 12 0\nD) StopIteration error",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "What is the output of the following slicing operation?\n\nnums = [10, 20, 30, 40, 50]\nprint(nums[10:])\n\nA) IndexError\nB) None\nC) []\nD) [50]",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "What does the following Python code print?\n\ndef test():\n    try:\n        return 1\n    finally:\n        return 2\n\nprint(test())\n\nA) 1\nB) 2\nC) None\nD) SyntaxError",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "What is the output of this Python code?\n\nx = 10\ndef outer():\n    x = 20\n    def inner():\n        nonlocal x\n        x += 5\n    inner()\n    return x\n\nprint(outer(), x)\n\nA) 25 10\nB) 25 15\nC) 20 10\nD) UnboundLocalError",
+    "expected": "A",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  }
+]
+

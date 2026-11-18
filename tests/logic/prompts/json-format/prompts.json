@@ -1,0 +1,53 @@
+[
+  {
+    "prompt": "All blips are blops. Some blops are bleeps. Which of the following conclusions MUST be true?\nA) All blips are bleeps.\nB) Some blips are bleeps.\nC) Some bleeps are blops.\nD) No blips are bleeps.",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "If the server crashes, the alert system triggers. The alert system triggered at 2:00 AM. Which statement is logically valid?\nA) The server definitely crashed at 2:00 AM.\nB) The server did not crash at 2:00 AM.\nC) If the alert system did not trigger, the server did not crash.\nD) The alert system only triggers when the server crashes.",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "Five books (P, Q, R, S, T) are stacked vertically. P is immediately above Q. R is somewhere below S. T is at the very bottom. Q is immediately above S. Which book is in the exact middle (3rd from the top)?\nA) P\nB) Q\nC) R\nD) S",
+    "expected": "D",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "On an island, Knights always tell the truth and Knaves always lie. You meet two inhabitants, A and B. A says: 'At least one of us is a Knave.' What are A and B?\nA) Both A and B are Knights.\nB) Both A and B are Knaves.\nC) A is a Knight and B is a Knave.\nD) A is a Knave and B is a Knight.",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost?\nA) $0.10\nB) $0.05\nC) $0.01\nD) $0.15",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "Exactly three switches (1, 2, and 3) control three lightbulbs in another room. Rule: Switch 1 can only be ON if Switch 2 is OFF. Switch 2 and Switch 3 must always have the same state. If Switch 1 is ON, what are the states of Switch 2 and Switch 3?\nA) Switch 2 is ON, Switch 3 is ON\nB) Switch 2 is OFF, Switch 3 is ON\nC) Switch 2 is OFF, Switch 3 is OFF\nD) Switch 2 is ON, Switch 3 is OFF",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "In a race, you overtake the person who is currently in second place. What position are you in now?\nA) First place\nB) Second place\nC) Third place\nD) Fourth place",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "Consider the statement: 'Not every student who studied passed the exam.' Which of the following is logically equivalent to this statement?\nA) No student who studied passed the exam.\nB) Every student who passed the exam studied.\nC) At least one student who studied did not pass the exam.\nD) At least one student who did not study passed the exam.",
+    "expected": "C",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "A lily pad patch doubles in size every day. If it takes 48 days for the patch to cover the entire lake, how many days did it take for the patch to cover half of the lake?\nA) 24 days\nB) 36 days\nC) 46 days\nD) 47 days",
+    "expected": "D",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  },
+  {
+    "prompt": "Four cards lie on a table showing 'E', 'K', '4', and '7'. You need to test the rule: 'If a card has a vowel on one side, it must have an even number on the other side.' Which two cards MUST you flip over to verify the rule?\nA) 'E' and '4'\nB) 'E' and '7'\nC) 'K' and '4'\nD) 'K' and '7'",
+    "expected": "B",
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+  }
+]
+
