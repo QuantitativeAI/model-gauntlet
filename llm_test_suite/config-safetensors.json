@@ -8,7 +8,19 @@
         "temperature": 0.3,
         "top_p": 0.85,
         "do_sample": true,
-        "max_new_tokens": 400
+        "max_new_tokens": 2000
+      }
+    },
+  "NVIDIA-Nemotron-3.5-Lightning-30B-A3B": {
+      "type": "transformers",
+      "model_id": "unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B",
+      "device_map": "auto",
+      "max_memory": { "0": "28GiB", "1": "21GiB" },
+      "params": {
+        "temperature": 0.3,
+        "top_p": 0.85,
+        "do_sample": true,
+        "max_new_tokens": 2000
       }
     }
   },

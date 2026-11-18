@@ -217,7 +217,7 @@ class GGUFModel:
             {
                 "model_path": self.config.model_id,
                 "n_ctx": self.config.n_ctx,
-                "n_gpu_layers": -1,
+                "n_gpu_layers": self.config.n_gpu_layers,
                 "seed": self.config.seed,
                 "verbose": False,
             }

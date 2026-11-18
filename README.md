@@ -93,6 +93,12 @@ Generation params merge over per-backend defaults; for `gguf` models the
 transformers spelling `max_new_tokens` is accepted and translated to llama.cpp's
 `max_tokens`. `n_ctx` (default 4096) sets the GGUF context window.
 
+`n_gpu_layers` (default -1 = all layers) controls GPU offload. For models
+larger than total VRAM, set a partial count — the remaining layers stay on
+CPU via mmap (slower, but it works). Multi-part GGUF models
+(`*-00001-of-00003.gguf`) load transparently: point `model_id` at the first
+part and llama.cpp picks up the rest.
+
 `seed` (default 0, `gguf` only) fixes the sampling seed so runs are
 reproducible: with the same seed, params and prompt order, a rerun produces
 the same generations, so score changes between runs reflect parameter changes

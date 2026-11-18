@@ -31,6 +31,14 @@ class ModelConfig(BaseModel):
     device_map: str | None = Field(None, description="Optional accelerate device_map, type 'transformers' only")
     max_memory: dict[str, Any] | None = Field(None, description="Optional accelerate max_memory mapping, type 'transformers' only")
     n_ctx: int = Field(4096, description="GGUF only: llama.cpp context window size (ignored for type 'transformers')")
+    n_gpu_layers: int = Field(
+        -1,
+        description=(
+            "GGUF only: layers to offload to GPU (-1 = all). Use a partial count for models "
+            "larger than total VRAM — the remaining layers stay on CPU via mmap. "
+            "Multi-part GGUF models: point model_id at the -00001-of-NNNNN part"
+        ),
+    )
     seed: int = Field(0, description="GGUF only: sampling seed; a fixed seed makes runs reproducible (ignored for type 'transformers')")
     main_gpu: int = Field(0, ge=0, description="GGUF only: primary GPU device index (ignored for type 'transformers')")
     tensor_split: list[float] | None = Field(

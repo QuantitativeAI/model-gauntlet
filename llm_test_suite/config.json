@@ -47,6 +47,25 @@
         "max_new_tokens": 2000
       }
     },
+    "gemma-4-26B-A4B-it-UD-Q6_K_XL": {
+      "type": "gguf",
+      "model_id": "/mnt/models/Gemma4-26B/gemma-4-26B-A4B-it-UD-Q6_K_XL.gguf",
+      "n_ctx": 20000,
+      "seed": 42,
+      "params": {
+        "temperature": 0.3,
+        "top_p": 0.85,
+        "do_sample": true,
+        "max_new_tokens": 2000
+      }
+    },
+    "qwen38-flash-next": {
+	  "type": "gguf",
+	  "model_id": "/mnt/models/Qwen38-flash-Next-IQ4/Qwen3.8-Flash-Next-UD-IQ4_XS-00001-of-00003.gguf",
+	  "n_ctx": 32768,
+	  "n_gpu_layers": 12,
+	  "params": { "temperature": 0.3, "top_p": 0.95, "top_k": 20, "min_p": 0.0, "max_new_tokens": 2000 }
+	},
     "Qwen3-8B-Q8_0": {
       "type": "gguf",
       "model_id": "/mnt/models/Qwen3-8B/Qwen3-8B-Q8_0.gguf",
@@ -61,6 +80,8 @@
  },
   "output_dir": "test_results"
 }
+
+
 
 
 
