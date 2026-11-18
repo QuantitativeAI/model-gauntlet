@@ -48,6 +48,32 @@ GGUF_DEFAULT_PARAMS: dict[str, Any] = {
     "max_tokens": 400,
 }
 
+# llama.cpp llama_type enum values for KV cache quantization (llm_options type_k/type_v).
+_LLAMA_TYPE_IDS: dict[str, int] = {
+    "f32": 0,
+    "f16": 1,
+    "q8_0": 2,
+    "q4_0": 3,
+    "i8": 4,
+    "i16": 5,
+    "i32": 6,
+    "i64": 7,
+    "f64": 8,
+    "q4_1": 9,
+    "q5_0": 10,
+    "q5_1": 11,
+    "q2_k": 12,
+    "q3_k_s": 13,
+    "q3_k_m": 14,
+    "q4_k_s": 15,
+    "q4_k_m": 16,
+    "q5_k_s": 17,
+    "q5_k_m": 18,
+    "q6_k": 19,
+    "q8_k": 20,
+    "bf16": 37,
+}
+
 
 @dataclass
 class GenerationOutput:
@@ -173,13 +199,29 @@ class GGUFModel:
         print(f"[{self.name}] Loading GGUF model {self.config.model_id}...")
         # n_gpu_layers=-1 offloads every layer the build supports; CPU-only builds
         # keep everything on the CPU. The chat template is embedded in the GGUF file.
-        llm_kwargs: dict[str, Any] = {
-            "model_path": self.config.model_id,
-            "n_ctx": self.config.n_ctx,
-            "n_gpu_layers": -1,
-            "seed": self.config.seed,
-            "verbose": False,
-        }
+        # llm_options passes extra kwargs straight to the Llama() constructor
+        # (flash_attn, use_mmap, n_batch, type_k/type_v, ...); the documented
+        # config fields below take precedence over anything in llm_options.
+        llm_kwargs: dict[str, Any] = dict(self.config.llm_options)
+        for key in ("type_k", "type_v"):
+            value = llm_kwargs.get(key)
+            if isinstance(value, str):
+                try:
+                    llm_kwargs[key] = _LLAMA_TYPE_IDS[value.lower()]
+                except KeyError:
+                    raise ValueError(
+                        f"Unknown {key} value '{value}'; expected an int or one of: "
+                        f"{', '.join(sorted(_LLAMA_TYPE_IDS))}"
+                    ) from None
+        llm_kwargs.update(
+            {
+                "model_path": self.config.model_id,
+                "n_ctx": self.config.n_ctx,
+                "n_gpu_layers": -1,
+                "seed": self.config.seed,
+                "verbose": False,
+            }
+        )
         if self.config.main_gpu:
             llm_kwargs["main_gpu"] = self.config.main_gpu
         if self.config.tensor_split:
@@ -188,6 +230,8 @@ class GGUFModel:
             llm_kwargs["split_mode"] = llama_cpp.LLAMA_SPLIT_MODE_ROW
         elif self.config.split_mode == "layer":
             llm_kwargs["split_mode"] = llama_cpp.LLAMA_SPLIT_MODE_LAYER
+        elif self.config.split_mode == "none":
+            llm_kwargs["split_mode"] = llama_cpp.LLAMA_SPLIT_MODE_NONE
         self.llm = LlamaCls(**llm_kwargs)
         self._disable_thinking_if_supported()
         print(f"[{self.name}] Model loaded.")

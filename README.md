@@ -102,6 +102,32 @@ report's Params column. (`transformers` runs are not seeded; very long
 generations can also vary slightly between runs due to GPU float
 non-determinism.)
 
+`llm_options` (`gguf` only) passes extra options straight to the llama-cpp
+`Llama()` constructor — the equivalent of llama-server's load-time flags:
+
+```json
+"qwen-27b": {
+  "type": "gguf",
+  "model_id": "/mnt/models/Qwen3.8-27B/Qwen3.8-27B-UD-Q6_K_L.gguf",
+  "n_ctx": 250000,
+  "tensor_split": [1.0, 1.0],
+  "llm_options": {
+    "flash_attn": true,
+    "use_mmap": false,
+    "type_k": "q4_0",
+    "type_v": "q4_0"
+  }
+}
+```
+
+`type_k`/`type_v` accept a type name (`"q4_0"`, `"q8_0"`, `"f16"`, ...) or the
+raw llama.cpp enum int. Sampling flags (`temperature`, `top_p`, `top_k`,
+`min_p`, `presence_penalty`, `repeat_penalty`, ...) go in `params` as before.
+Some llama-server flags have no equivalent here: `--parallel` (prompts run
+sequentially through one context), `--jinja` (always on), `--lazy-mode`
+(not in the Python API), `--spec-type` (speculative decoding), and
+`--reasoning` (thinking is controlled by the chat template instead).
+
 ### Multi-GPU (Intel)
 
 Both backends can spread one model across several Intel GPUs. This is for

@@ -2,52 +2,52 @@
   {
     "prompt": "Evaluate the limit: $\\lim_{x \\to 3} (2x^2 - 4x + 1)$\nA) $5$\nB) $7$\nC) $13$\nD) $19$",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "Find the derivative of $f(x) = 4x^3 - 5x^2 + 6x - 9$.\nA) $12x^2 - 10x + 6$\nB) $12x^2 - 5x + 6$\nC) $4x^2 - 10x + 6$\nD) $12x^3 - 10x^2 + 6x$",
     "expected": "A",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "Evaluate the indefinite integral: $\\int (6x^2 + 2x) \\, dx$\nA) $12x + 2 + C$\nB) $2x^3 + x^2 + C$\nC) $3x^3 + x^2 + C$\nD) $6x^3 + 2x^2 + C$",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "Find $\\frac{dy}{dx}$ if $y = \\sin(3x)$.\nA) $\\cos(3x)$\nB) $-3\\cos(3x)$\nC) $3\\cos(3x)$\nD) $3\\sin(3x)$",
     "expected": "C",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "Evaluate the definite integral: $\\int_{0}^{2} 3x^2 \\, dx$\nA) $6$\nB) $8$\nC) $12$\nD) $24$",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What is the derivative of $f(x) = e^{2x}$?\nA) $e^{2x}$\nB) $2xe^{2x-1}$\nC) $2e^{2x}$\nD) $\\frac{1}{2}e^{2x}$",
     "expected": "C",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "Evaluate the limit: $\\lim_{x \\to 0} \\frac{\\sin(5x)}{x}$\nA) $0$\nB) $1$\nC) $5$\nD) $\\infty$",
     "expected": "C",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "Find the derivative of $f(x) = \\ln(x^2 + 1)$.\nA) $\\frac{1}{x^2 + 1}$\nB) $\\frac{2x}{x^2 + 1}$\nC) $2x\\ln(x^2 + 1)$\nD) $\\frac{x}{x^2 + 1}$",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "Using the product rule, find the derivative of $f(x) = x \\cdot e^x$.\nA) $e^x$\nB) $x e^x$\nC) $e^x(x + 1)$\nD) $e^x(x - 1)$",
     "expected": "C",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "Find the critical point(s) of the function $f(x) = x^2 - 6x + 8$.\nA) $x = 2$\nB) $x = 3$\nC) $x = 4$\nD) $x = -3$",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   }
 ]
 

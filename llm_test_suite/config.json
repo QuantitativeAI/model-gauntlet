@@ -8,7 +8,43 @@
         "temperature": 0.3,
         "top_p": 0.85,
         "do_sample": true,
-        "max_new_tokens": 600
+        "max_new_tokens": 2000
+      }
+    },
+    "Qwen3.8-27B-UD-Q6_K_L": {
+      "type": "gguf",
+      "model_id": "/mnt/models/Qwen38-27B/Qwen3.8-27B-UD-Q6_K_L.gguf",
+      "n_ctx": 20000,
+      "seed": 42,
+      "params": {
+        "temperature": 0.3,
+        "top_p": 0.85,
+        "do_sample": true,
+        "max_new_tokens": 2000
+      }
+    },
+    "Ornith-1.5-35B-Q6_K": {
+      "type": "gguf",
+      "model_id": "/mnt/models/Ornith-1.5-35B/Ornith-1.5-35B-Q6_K.gguf",
+      "n_ctx": 20000,
+      "seed": 42,
+      "params": {
+        "temperature": 0.3,
+        "top_p": 0.85,
+        "do_sample": true,
+        "max_new_tokens": 2000
+      }
+    },
+    "DeepSeek-V4-Pro-Qwen3.5-9B-MTP-Q8_0": {
+      "type": "gguf",
+      "model_id": "/mnt/models/JackRong/DeepSeek-V4-Pro-Qwen3.5-9B-MTP-Q8_0.gguf",
+      "n_ctx": 20000,
+      "seed": 42,
+      "params": {
+        "temperature": 0.3,
+        "top_p": 0.85,
+        "do_sample": true,
+        "max_new_tokens": 2000
       }
     },
     "Qwen3-8B-Q8_0": {
@@ -19,7 +55,7 @@
         "temperature": 0.3,
         "top_p": 0.85,
         "do_sample": true,
-        "max_new_tokens": 600
+        "max_new_tokens": 2000
       }
     }
  },

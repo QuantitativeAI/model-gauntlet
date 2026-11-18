@@ -2,52 +2,52 @@
   {
     "prompt": "What is the output of the following C++ code?\n\n#include <iostream>\nint main() {\n    int arr[] = {10, 20, 30, 40};\n    int* p = arr;\n    std::cout << *(p + 2) << \" \" << 2[arr];\n    return 0;\n}\n\nA) 30 30\nB) 20 30\nC) Compilation error on 2[arr]\nD) 30 followed by garbage value",
     "expected": "A",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What does the following C++ program output?\n\n#include <iostream>\nclass Base {\npublic:\n    virtual void show() { std::cout << \"Base\"; }\n};\nclass Derived : public Base {\npublic:\n    void show() override { std::cout << \"Derived\"; }\n};\nvoid print(Base b) { b.show(); }\nint main() {\n    Derived d;\n    print(d);\n    return 0;\n}\n\nA) Derived\nB) Base\nC) Compilation error\nD) Undefined behavior",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What is the output of this C++ snippet?\n\n#include <iostream>\nint main() {\n    unsigned int a = 1;\n    int b = -2;\n    if (a + b > 0)\n        std::cout << \"Positive\";\n    else\n        std::cout << \"Negative\";\n    return 0;\n}\n\nA) Negative\nB) Positive\nC) Compilation warning/error\nD) 0",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What does the following C++ code print?\n\n#include <iostream>\nint main() {\n    int x = 5;\n    int& ref = x;\n    int y = 10;\n    ref = y;\n    y = 20;\n    std::cout << x << \" \" << ref;\n    return 0;\n}\n\nA) 20 20\nB) 5 20\nC) 10 10\nD) 10 20",
     "expected": "C",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What is the output of this C++ code involving constructor/destructor order?\n\n#include <iostream>\nstruct A { ~A() { std::cout << \"A\"; } };\nstruct B : A { ~B() { std::cout << \"B\"; } };\nint main() {\n    B obj;\n    return 0;\n}\n\nA) AB\nB) BA\nC) B\nD) A",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What happens when the following C++ code executes?\n\n#include <iostream>\n#include <vector>\nint main() {\n    std::vector<int> v = {1, 2, 3};\n    std::cout << v.size() << \" \" << v.capacity();\n    v.clear();\n    std::cout << \" \" << v.size();\n    return 0;\n}\n\nA) 3 3 0\nB) 3 3 3\nC) 3 0 0\nD) Compilation error",
     "expected": "A",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What is the output of the following C++ snippet?\n\n#include <iostream>\nint main() {\n    int a = 1, b = 2, c = 3;\n    int res = (a++, b++, c++);\n    std::cout << res << \" \" << a;\n    return 0;\n}\n\nA) 1 2\nB) 3 2\nC) 4 2\nD) 3 1",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What does the following C++ template code output?\n\n#include <iostream>\ntemplate<typename T>\nvoid count(T x) {\n    static int c = 0;\n    std::cout << ++c;\n}\nint main() {\n    count(1);\n    count(2);\n    count(3.5);\n    return 0;\n}\n\nA) 123\nB) 121\nC) 111\nD) Compilation error",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What is the primary bug in the following C++ function?\n\nint* createArray() {\n    int arr[5] = {1, 2, 3, 4, 5};\n    return arr;\n}\n\nA) Array size must be specified dynamically\nB) Returning a pointer to a local stack variable causes dangling pointer / undefined behavior\nC) Syntax error in array initialization\nD) Memory leak on the heap",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What is the output of the following C++ code?\n\n#include <iostream>\nint main() {\n    const char* s1 = \"hello\";\n    char s2[] = \"hello\";\n    std::cout << sizeof(s1) << \" \" << sizeof(s2) << \" (on 64-bit)\";\n    return 0;\n}\n\nA) 5 5 (on 64-bit)\nB) 6 6 (on 64-bit)\nC) 8 6 (on 64-bit)\nD) 8 5 (on 64-bit)",
     "expected": "C",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   }
 ]
 

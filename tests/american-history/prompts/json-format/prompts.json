@@ -2,52 +2,52 @@
   {
     "prompt": "Which 1787 agreement resolved the dispute between large and small states over representation in the U.S. Congress?\nA) The Three-Fifths Compromise\nB) The Connecticut (Great) Compromise\nC) The Missouri Compromise\nD) The Articles of Confederation",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "Which Supreme Court case established the principle of judicial review in 1803?\nA) McCulloch v. Maryland\nB) Gibbons v. Ogden\nC) Marbury v. Madison\nD) Dred Scott v. Sandford",
     "expected": "C",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "The 1803 Louisiana Purchase doubled the size of the United States after President Thomas Jefferson bought the territory from which country?\nA) Spain\nB) Great Britain\nC) Russia\nD) France",
     "expected": "D",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "Which Constitutional Amendment abolished slavery throughout the United States in 1865?\nA) 13th Amendment\nB) 14th Amendment\nC) 15th Amendment\nD) 19th Amendment",
     "expected": "A",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What was the primary goal of the 1862 Homestead Act?\nA) To fund the construction of the Erie Canal\nB) To encourage western migration by providing settlers with 160 acres of public land\nC) To establish federal land-grant universities\nD) To relocate Native American tribes to reservations",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "Which Progressive Era constitutional amendment granted women the right to vote nationwide in 1920?\nA) 16th Amendment\nB) 17th Amendment\nC) 18th Amendment\nD) 19th Amendment",
     "expected": "D",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "President Franklin D. Roosevelt's 'New Deal' programs were primarily created to address which crisis?\nA) The Dust Bowl agricultural collapse only\nB) World War I debt repayment\nC) The Great Depression\nD) The Cuban Missile Crisis",
     "expected": "C",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What event directly prompted the United States to formally enter World War II in December 1941?\nA) The German invasion of Poland\nB) The sinking of the RMS Lusitania\nC) The Japanese attack on Pearl Harbor\nD) The interception of the Zimmermann Telegram",
     "expected": "C",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "The 1954 Supreme Court ruling in Brown v. Board of Education overturned which earlier legal doctrine?\nA) Clear and present danger\nB) Separate but equal\nC) Executive privilege\nD) Prior restraint",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   },
   {
     "prompt": "What was the primary objective of the Marshall Plan following World War II?\nA) To establish a military alliance against the Soviet Union\nB) To provide economic aid to rebuild Western European economies\nC) To divide Germany into four occupation zones\nD) To create the United Nations Security Council",
     "expected": "B",
-    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"selected_option\": \"string\", \"explanation\": \"string\"}."
+    "system": "You are a helpful assistant that responds exclusively in valid JSON format matching this schema: {\"explanation\": \"string\", \"selected_option\": \"string\"}."
   }
 ]
 

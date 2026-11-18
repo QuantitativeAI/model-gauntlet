@@ -38,7 +38,15 @@ class ModelConfig(BaseModel):
         description="GGUF only: per-GPU weight ratio for multi-GPU, e.g. [1.0, 1.0] (ignored for type 'transformers')",
     )
     split_mode: str | None = Field(
-        None, description="GGUF only: 'row' (split each tensor) or 'layer' (split by layer); default is llama.cpp's"
+        None,
+        description="GGUF only: 'none' (single GPU), 'row' (split each tensor) or 'layer' (split by layer); default is llama.cpp's",
+    )
+    llm_options: dict[str, Any] = Field(
+        default_factory=dict,
+        description=(
+            "GGUF only: extra kwargs passed as-is to the llama-cpp Llama() constructor "
+            "(e.g. flash_attn, use_mmap, n_batch, type_k, type_v); documented fields take precedence"
+        ),
     )
 
 
